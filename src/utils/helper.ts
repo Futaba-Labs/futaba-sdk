@@ -1,5 +1,6 @@
 import { ethers } from "ethers"
-import { ChainId, ChainKey, ChainStage, GATEWAY, GATEWAY_ABI, LIGHT_CLIENT } from "../constants"
+import { ChainId, ChainKey, ChainStage, GATEWAY, LIGHT_CLIENT } from "../constants"
+import GATEWAY_ABI from "../../artifacts/gateway.abi.json"
 
 export function getChainKey(chainId: ChainId): ChainKey {
   const key = ChainId[chainId]
@@ -10,10 +11,9 @@ export function getChainKey(chainId: ChainId): ChainKey {
 }
 
 export function getChainIdByChainKey(chainKey: ChainKey): ChainId {
+  const ck = chainKey.toUpperCase()
   // @ts-ignore
-  const key = ChainKey[chainKey]
-  // @ts-ignore
-  const chainId: ChainId = ChainId[key]
+  const chainId: ChainId = ChainId[ck]
   if (chainId) return chainId
   throw new Error(`No chainId for ${chainKey}`)
 }
@@ -29,6 +29,7 @@ export function getGatewayContract(chainId: ChainId, chainStage: ChainStage, pro
   const chainKey = getChainKey(chainId)
   const gatewayAddress = GATEWAY[chainStage][chainKey]
   if (!gatewayAddress) throw new Error("Gateway address not found")
+  console.log(GATEWAY_ABI)
   return new ethers.Contract(
     gatewayAddress,
     GATEWAY_ABI,

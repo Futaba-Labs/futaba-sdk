@@ -1,12 +1,7 @@
-import * as GATEWAY_ABI from '../../artifacts/gateway.abi.json';
-
 // enum
 export { ChainId } from './ChainId'
 export { ChainKey } from './ChainKey'
 export { ChainStage } from './ChainStage'
-
-// ABI
-export { GATEWAY_ABI }
 
 // constants
 export * from './deployments'

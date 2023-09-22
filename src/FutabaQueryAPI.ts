@@ -44,6 +44,7 @@ export class FutabaQueryAPI {
   async estimateFee(queries: QueryRequest[], gasLimit: BigNumber = BigNumber.from("1000000")) {
     const querySize = queries.length
     if (querySize <= 0) throw new Error("querySize must be positive")
+    if (querySize > 10) throw new Error("Too many queries")
     const gelatoFee = await relay.getEstimatedFee(this.chainId, NATIVE_TOKEN, gasLimit, true)
 
     const proofFee = BigNumber.from((BASE_QUERY_COST * querySize).toString())
