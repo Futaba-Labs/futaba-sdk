@@ -6,11 +6,11 @@ import { getLightClientAddress, getGatewayContract, QueryRequest } from "./utils
 export class FutabaGateway {
   readonly stage: ChainStage;
   readonly chainId: ChainId;
-  readonly provider: ethers.providers.JsonRpcProvider;
-  private lightClient: string;
-  private gateway: ethers.Contract;
+  readonly provider: ethers.Wallet | ethers.providers.Web3Provider;
+  readonly lightClient: string;
+  readonly gateway: ethers.Contract;
 
-  constructor(stage: ChainStage, chainId: ChainId, provider: ethers.providers.JsonRpcProvider, lightClient?: string) {
+  constructor(stage: ChainStage, chainId: ChainId, provider: ethers.Wallet | ethers.providers.Web3Provider, lightClient?: string) {
     this.chainId = chainId;
     this.stage = stage;
     this.provider = provider;
@@ -27,7 +27,7 @@ export class FutabaGateway {
   async sendQuery(queries: QueryRequest[], callBack: string, message: string, gasLimit: BigNumber = BigNumber.from("1000000")): Promise<ethers.ContractReceipt> {
     if (queries.length > 10) throw new Error("Too many queries")
 
-    const queryAPI = new FutabaQueryAPI(this.chainId, this.stage, this.provider, { lightClient: this.lightClient });
+    const queryAPI = new FutabaQueryAPI(this.stage, this.chainId, { lightClient: this.lightClient });
     const fee = await queryAPI.estimateFee(queries, gasLimit)
 
     const tx: ContractTransaction = await this.gateway.query(queries, this.lightClient, callBack, message, { gasLimit, value: fee })

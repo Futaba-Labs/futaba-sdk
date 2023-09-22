@@ -9,9 +9,9 @@ export class FutabaQueryAPI {
   readonly stage: ChainStage;
   readonly chainId: ChainId;
   readonly provider: ethers.providers.JsonRpcProvider;
-  private lightClient: string;
+  readonly lightClient: string;
 
-  constructor(chainId: ChainId, stage: ChainStage, provider: ethers.providers.JsonRpcProvider, options?: {
+  constructor(stage: ChainStage, chainId: ChainId, options?: {
     rpc?: string
     lightClient?: string
   }) {
