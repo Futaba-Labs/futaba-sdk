@@ -1,4 +1,4 @@
-import * as GATEWAY_ABI from './gateway.abi.json';
+import * as GATEWAY_ABI from '../../artifacts/gateway.abi.json';
 
 // enum
 export { ChainId } from './ChainId'

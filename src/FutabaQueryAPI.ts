@@ -1,19 +1,9 @@
 import { BigNumber, ethers } from "ethers";
-import { BASE_QUERY_COST, ChainId, ChainStage, GATEWAY, GATEWAY_ABI, LIGHT_CLIENT, NATIVE_TOKEN, RPCS } from "./constants";
+import { BASE_QUERY_COST, ChainId, ChainStage, NATIVE_TOKEN, RPCS } from "./constants";
 import { GelatoRelay } from "@gelatonetwork/relay-sdk";
-import { getChainKey } from "./utils/helper";
-import { QueryRequest } from "./utils/types";
+import { getLightClientAddress, QueryRequest, getGatewayContract, getChainKey } from "./utils";
 
 const relay = new GelatoRelay();
-
-export interface Param {
-  chainId: number
-  stage: ChainStage,
-  options?: {
-    rpc?: string
-    lightClient?: string
-  }
-}
 
 export class FutabaQueryAPI {
   readonly stage: ChainStage;
@@ -21,34 +11,37 @@ export class FutabaQueryAPI {
   readonly provider: ethers.providers.JsonRpcProvider;
   private lightClient: string;
 
-  constructor(param: Param) {
-    this.chainId = param.chainId;
-    this.stage = param.stage;
+  constructor(chainId: ChainId, stage: ChainStage, provider: ethers.providers.JsonRpcProvider, options?: {
+    rpc?: string
+    lightClient?: string
+  }) {
+    this.chainId = chainId;
+    this.stage = stage;
     let rpc: string,
       lightClient: string;
 
-    if (param.options) {
-      if (param.options.rpc) {
-        rpc = param.options.rpc;
+    if (options) {
+      if (options.rpc) {
+        rpc = options.rpc;
       } else {
-        rpc = this.getRPC(param.chainId, param.stage)
+        rpc = this.getRPC(chainId, stage)
       }
 
-      if (param.options.lightClient) {
-        lightClient = param.options.lightClient;
+      if (options.lightClient) {
+        lightClient = options.lightClient;
       } else {
-        lightClient = this.getLightClient(param.chainId, param.stage)
+        lightClient = getLightClientAddress(chainId, stage)
       }
     } else {
-      rpc = this.getRPC(param.chainId, param.stage)
-      lightClient = this.getLightClient(param.chainId, param.stage)
+      rpc = this.getRPC(chainId, stage)
+      lightClient = getLightClientAddress(chainId, stage)
     }
 
     this.lightClient = lightClient
     this.provider = new ethers.providers.JsonRpcProvider(rpc);
   }
 
-  public async estimateFee(queries: QueryRequest[], gasLimit: BigNumber = BigNumber.from("1000000")) {
+  async estimateFee(queries: QueryRequest[], gasLimit: BigNumber = BigNumber.from("1000000")) {
     const querySize = queries.length
     if (querySize <= 0) throw new Error("querySize must be positive")
     const gelatoFee = await relay.getEstimatedFee(this.chainId, NATIVE_TOKEN, gasLimit, true)
@@ -65,15 +58,8 @@ export class FutabaQueryAPI {
   }
 
   private async estimateProtocolFee(queries: QueryRequest[]) {
-    const chainKey = getChainKey(this.chainId)
-    const gatewayAddress = GATEWAY[this.stage][chainKey]
-    if (!gatewayAddress) throw new Error("Gateway address not found")
+    const gateway = getGatewayContract(this.chainId, this.stage, this.provider)
 
-    const gateway = new ethers.Contract(
-      gatewayAddress,
-      GATEWAY_ABI,
-      this.provider
-    )
     return await gateway.estimateFee(this.lightClient, queries)
   }
 
@@ -82,12 +68,5 @@ export class FutabaQueryAPI {
     const r = RPCS[chainStage][chainKey]
     if (!r) throw new Error("RPC not found");
     return r
-  }
-
-  private getLightClient(chainId: ChainId, chainStage: ChainStage) {
-    const chainKey = getChainKey(chainId)
-    const lc = LIGHT_CLIENT[chainStage][chainKey];
-    if (!lc) throw new Error("Light client not found")
-    return lc
   }
 }
