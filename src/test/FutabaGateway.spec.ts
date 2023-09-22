@@ -84,9 +84,8 @@ describe("FutabaGateway", () => {
       const gasLimit = ethers.BigNumber.from("1000000")
       queries.push(getQueryRequest())
       // @ts-ignore
-      const resTx = await gateway.sendQuery(queries, callBack, message, gasLimit)
-      console.log(resTx)
-      expect(resTx.status).toEqual(1)
+      const { tx, queryId } = await gateway.sendQuery(queries, callBack, message, gasLimit)
+      expect(tx.status).toEqual(1)
     })
 
     test("getCache()", async () => {
