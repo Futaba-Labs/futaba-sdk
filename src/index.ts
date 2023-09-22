@@ -1,2 +1,3 @@
 export * from "./constants"
-export * from "./fee"
+export * from "./FutabaQueryAPI"
+export * from "./FutabaGateway"
