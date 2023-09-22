@@ -1,8 +1,16 @@
-import { ChainId } from ".";
+import { ChainKey, ChainStage } from ".";
 
-export const RPCS: { [chainId in ChainId]?: string } = {
-  [ChainId.GOERLI]: "https://rpc.goerli.mudit.blog/",
-  [ChainId.MUMBAI]: "https://rpc-mumbai.maticvigil.com",
-  [ChainId.ARBITRUM_GOERLI]: "https://goerli-rollup.arbitrum.io/rpc/",
-  [ChainId.OPTIMISM_GOERLI]: "https://goerli.optimism.io/",
+export const RPCS: Record<ChainStage, Partial<Record<ChainKey, string>>> = {
+  [ChainStage.MAINNET]: {
+    [ChainKey.ETHEREUM]: "",
+    [ChainKey.POLYGON]: "",
+    [ChainKey.ARBITRUM]: "",
+    [ChainKey.OPTIMISM]: "",
+  },
+  [ChainStage.TESTNET]: {
+    [ChainKey.GOERLI]: "https://rpc.goerli.mudit.blog/",
+    [ChainKey.MUMBAI]: "https://rpc-mumbai.maticvigil.com",
+    [ChainKey.ARBITRUM_GOERLI]: "https://goerli-rollup.arbitrum.io/rpc/",
+    [ChainKey.OPTIMISM_GOERLI]: "https://goerli.optimism.io/",
+  },
 }
