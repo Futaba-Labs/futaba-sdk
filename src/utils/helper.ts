@@ -25,7 +25,7 @@ export function getLightClientAddress(chainId: ChainId, chainStage: ChainStage) 
   return lc
 }
 
-export function getGatewayContract(chainId: ChainId, chainStage: ChainStage, provider: ethers.providers.JsonRpcProvider | ethers.Wallet | ethers.providers.Web3Provider) {
+export function getGatewayContract(chainId: ChainId, chainStage: ChainStage, provider: ethers.providers.JsonRpcProvider | ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer) {
   const chainKey = getChainKey(chainId)
   const gatewayAddress = GATEWAY[chainStage][chainKey]
   if (!gatewayAddress) throw new Error("Gateway address not found")

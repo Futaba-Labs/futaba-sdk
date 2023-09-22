@@ -1,10 +1,10 @@
-import { ethers } from "ethers";
+import { BigNumberish, BytesLike, ethers } from "ethers";
 
 export interface QueryRequest {
-  dstChainId: number;
+  dstChainId: BigNumberish;
   to: string;
-  height: number;
-  slot: string;
+  height: BigNumberish;
+  slot: BytesLike;
 }
 
 export interface QueryResponse {

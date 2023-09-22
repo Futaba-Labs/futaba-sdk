@@ -6,11 +6,11 @@ import { getLightClientAddress, getGatewayContract, QueryRequest, QueryResponse 
 export class FutabaGateway {
   readonly stage: ChainStage;
   readonly chainId: ChainId;
-  readonly provider: ethers.Wallet | ethers.providers.Web3Provider;
+  readonly provider: ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer;
   readonly lightClient: string;
   readonly gateway: ethers.Contract;
 
-  constructor(stage: ChainStage, chainId: ChainId, provider: ethers.Wallet | ethers.providers.Web3Provider, lightClient?: string) {
+  constructor(stage: ChainStage, chainId: ChainId, provider: ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer, lightClient?: string) {
     this.chainId = chainId;
     this.stage = stage;
     this.provider = provider;
