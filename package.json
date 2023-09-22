@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "prepare": "yarn build",
-    "test": "vitest"
+    "test": "vitest",
+    "send-query": "./node_modules/.bin/ts-node scripts/sendQuery.ts"
   },
   "license": "MIT",
   "author": "Futaba Lab",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "dotenv": "^16.3.1",
+    "ts-node": "^10.9.1",
     "vitest": "^0.34.5"
   }
 }
