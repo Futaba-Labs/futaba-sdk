@@ -19,21 +19,21 @@ export const getChainIdByChainKey = (chainKey: ChainKey): ChainId => {
   throw new Error(`No chainId for ${chainKey}`)
 }
 
-export const getRpc = (chainId: ChainId, chainStage: ChainStage) => {
+export const getRpc = (chainStage: ChainStage, chainId: ChainId) => {
   const chainKey = getChainKey(chainId)
   const rpc = RPCS[chainStage][chainKey]
   if (!rpc) throw new Error("RPC not found")
   return rpc
 }
 
-export const getLightClientAddress = (chainId: ChainId, chainStage: ChainStage) => {
+export const getLightClientAddress = (chainStage: ChainStage, chainId: ChainId) => {
   const chainKey = getChainKey(chainId)
   const lightClientAddress = LIGHT_CLIENT[chainStage][chainKey];
   if (!lightClientAddress) throw new Error("Light client not found")
   return lightClientAddress
 }
 
-export const getGatewayAddress = (chainId: ChainId, chainStage: ChainStage) => {
+export const getGatewayAddress = (chainStage: ChainStage, chainId: ChainId) => {
   const chainKey = getChainKey(chainId)
   const gatewayAddress = GATEWAY[chainStage][chainKey]
   if (!gatewayAddress) throw new Error("Gateway address not found")
@@ -41,10 +41,10 @@ export const getGatewayAddress = (chainId: ChainId, chainStage: ChainStage) => {
 }
 
 export const getGatewayContract = (
-  chainId: ChainId,
   chainStage: ChainStage,
+  chainId: ChainId,
   provider: ethers.providers.JsonRpcProvider | Provider) => {
-  const gatewayAddress = getGatewayAddress(chainId, chainStage)
+  const gatewayAddress = getGatewayAddress(chainStage, chainId)
   return new ethers.Contract(
     gatewayAddress,
     GATEWAY_ABI,

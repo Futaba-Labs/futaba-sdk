@@ -35,7 +35,7 @@ describe("Helper", () => {
   test("getLightClientAddress()", () => {
     const chainId = 80001
     const chainStage = ChainStage.TESTNET
-    const lc = getLightClientAddress(chainId, chainStage)
+    const lc = getLightClientAddress(chainStage, chainId)
     expect(lc).toEqual(LIGHT_CLIENT[chainStage][ChainKey.MUMBAI])
   })
 
@@ -43,7 +43,7 @@ describe("Helper", () => {
     const chainId = 80001
     const chainStage = ChainStage.TESTNET
     const provider = new ethers.providers.JsonRpcProvider(process.env.PROVIDER_URI)
-    const gateway = getGatewayContract(chainId, chainStage, provider)
+    const gateway = getGatewayContract(chainStage, chainId, provider)
     expect(gateway.address).toEqual(GATEWAY[chainStage][ChainKey.MUMBAI])
   })
 })

@@ -23,10 +23,10 @@ export class FutabaGateway {
     if (lightClient) {
       this.lightClient = lightClient
     } else {
-      this.lightClient = getLightClientAddress(chainId, stage)
+      this.lightClient = getLightClientAddress(stage, chainId)
     }
 
-    this.gateway = getGatewayContract(this.chainId, this.stage, this.provider)
+    this.gateway = getGatewayContract(this.stage, this.chainId, this.provider)
   }
 
   sendQuery = async (

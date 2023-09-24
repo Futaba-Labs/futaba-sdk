@@ -24,17 +24,17 @@ export class FutabaQueryAPI {
       if (options.rpc) {
         rpc = options.rpc;
       } else {
-        rpc = getRpc(chainId, stage)
+        rpc = getRpc(stage, chainId)
       }
 
       if (options.lightClient) {
         lightClient = options.lightClient;
       } else {
-        lightClient = getLightClientAddress(chainId, stage)
+        lightClient = getLightClientAddress(stage, chainId)
       }
     } else {
-      rpc = getRpc(chainId, stage)
-      lightClient = getLightClientAddress(chainId, stage)
+      rpc = getRpc(stage, chainId)
+      lightClient = getLightClientAddress(stage, chainId)
     }
 
     this.lightClient = lightClient
@@ -59,7 +59,7 @@ export class FutabaQueryAPI {
   }
 
   private estimateProtocolFee = async (queries: QueryRequest[]) => {
-    const gateway = getGatewayContract(this.chainId, this.stage, this.provider)
+    const gateway = getGatewayContract(this.stage, this.chainId, this.provider)
 
     return await gateway.estimateFee(this.lightClient, queries)
   }

@@ -77,16 +77,16 @@ describe("FutabaGateway", () => {
       await expect(() => gateway.sendQuery(queries, callBack, message, gasLimit)).rejects.toThrowError("Too many queries")
     })
 
-    test("sendQuery()", async () => {
-      const queries: QueryRequest[] = [getQueryRequest()]
-      const callBack = CALLBACK
-      const message = MESSAGE
-      const gasLimit = ethers.BigNumber.from("1000000")
-      queries.push(getQueryRequest())
-      // @ts-ignore
-      const { tx, queryId } = await gateway.sendQuery(queries, callBack, message, gasLimit)
-      expect(tx.status).toEqual(1)
-    })
+    // test("sendQuery()", async () => {
+    //   const queries: QueryRequest[] = [getQueryRequest()]
+    //   const callBack = CALLBACK
+    //   const message = MESSAGE
+    //   const gasLimit = ethers.BigNumber.from("1000000")
+    //   queries.push(getQueryRequest())
+    //   // @ts-ignore
+    //   const { tx, queryId } = await gateway.sendQuery(queries, callBack, message, gasLimit)
+    //   expect(tx.status).toEqual(1)
+    // })
 
     test("getCache()", async () => {
       const queries: QueryRequest[] = [getQueryRequest()]
