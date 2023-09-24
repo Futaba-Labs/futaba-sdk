@@ -11,3 +11,5 @@ export interface QueryResponse {
   tx: ethers.ContractReceipt;
   queryId: string;
 }
+
+export type Provider = ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer

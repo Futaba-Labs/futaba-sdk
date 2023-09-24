@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import { BASE_QUERY_COST, ChainId, ChainStage, NATIVE_TOKEN, RPCS } from "./constants";
 import { GelatoRelay } from "@gelatonetwork/relay-sdk";
-import { getLightClientAddress, QueryRequest, getGatewayContract, getChainKey } from "./utils";
+import { getLightClientAddress, QueryRequest, getGatewayContract, getChainKey, getRpc } from "./utils";
 
 const relay = new GelatoRelay();
 
@@ -24,7 +24,7 @@ export class FutabaQueryAPI {
       if (options.rpc) {
         rpc = options.rpc;
       } else {
-        rpc = this.getRPC(chainId, stage)
+        rpc = getRpc(chainId, stage)
       }
 
       if (options.lightClient) {
@@ -33,7 +33,7 @@ export class FutabaQueryAPI {
         lightClient = getLightClientAddress(chainId, stage)
       }
     } else {
-      rpc = this.getRPC(chainId, stage)
+      rpc = getRpc(chainId, stage)
       lightClient = getLightClientAddress(chainId, stage)
     }
 
@@ -41,7 +41,7 @@ export class FutabaQueryAPI {
     this.provider = new ethers.providers.JsonRpcProvider(rpc);
   }
 
-  async estimateFee(queries: QueryRequest[], gasLimit: BigNumber = BigNumber.from("1000000")) {
+  estimateFee = async (queries: QueryRequest[], gasLimit: BigNumber = BigNumber.from("1000000")) => {
     const querySize = queries.length
     if (querySize <= 0) throw new Error("querySize must be positive")
     if (querySize > 10) throw new Error("Too many queries")
@@ -58,16 +58,9 @@ export class FutabaQueryAPI {
     return totalFee
   }
 
-  private async estimateProtocolFee(queries: QueryRequest[]) {
+  private estimateProtocolFee = async (queries: QueryRequest[]) => {
     const gateway = getGatewayContract(this.chainId, this.stage, this.provider)
 
     return await gateway.estimateFee(this.lightClient, queries)
-  }
-
-  private getRPC(chainId: ChainId, chainStage: ChainStage) {
-    const chainKey = getChainKey(chainId)
-    const r = RPCS[chainStage][chainKey]
-    if (!r) throw new Error("RPC not found");
-    return r
   }
 }

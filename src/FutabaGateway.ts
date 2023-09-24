@@ -1,16 +1,16 @@
 import { BigNumber, ContractTransaction, ethers } from "ethers";
 import { ChainId, ChainStage, FutabaQueryAPI } from ".";
 import { QueryStatus } from "./constants/QueryStatus";
-import { getLightClientAddress, getGatewayContract, QueryRequest, QueryResponse } from "./utils";
+import { getLightClientAddress, getGatewayContract, QueryRequest, QueryResponse, Provider } from "./utils";
 
 export class FutabaGateway {
   readonly stage: ChainStage;
   readonly chainId: ChainId;
-  readonly provider: ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer;
+  readonly provider: Provider;
   readonly lightClient: string;
   readonly gateway: ethers.Contract;
 
-  constructor(stage: ChainStage, chainId: ChainId, provider: ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer, lightClient?: string) {
+  constructor(stage: ChainStage, chainId: ChainId, provider: Provider, lightClient?: string) {
     this.chainId = chainId;
     this.stage = stage;
     this.provider = provider;
@@ -24,7 +24,12 @@ export class FutabaGateway {
     this.gateway = getGatewayContract(this.chainId, this.stage, this.provider)
   }
 
-  async sendQuery(queries: QueryRequest[], callBack: string, message: string, gasLimit: BigNumber = BigNumber.from("1000000")): Promise<QueryResponse> {
+  sendQuery = async (
+    queries: QueryRequest[],
+    callBack: string,
+    message: string,
+    gasLimit: BigNumber = BigNumber.from("1000000")
+  ): Promise<QueryResponse> => {
     if (queries.length > 10) throw new Error("Too many queries")
 
     const queryAPI = new FutabaQueryAPI(this.stage, this.chainId, { lightClient: this.lightClient });
@@ -48,17 +53,17 @@ export class FutabaGateway {
     return { tx: resTx, queryId }
   }
 
-  async getCache(queries: QueryRequest[]): Promise<[]> {
+  getCache = async (queries: QueryRequest[]): Promise<[]> => {
     const cache: [] = await this.gateway.getCache(queries)
     return cache
   }
 
-  async getQueryStatus(queryId: string): Promise<QueryStatus> {
+  getQueryStatus = async (queryId: string): Promise<QueryStatus> => {
     const status: number = await this.gateway.getQueryStatus(queryId)
     return status as QueryStatus;
   }
 
-  async waitForQueryResult(queryId: string) {
+  waitForQueryResult = async (queryId: string) => {
     this.gateway.removeAllListeners()
     const filter = this.gateway.filters.ReceiveQuery(queryId, null, null, null, null)
 

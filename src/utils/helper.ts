@@ -1,8 +1,9 @@
 import { ethers } from "ethers"
 import { ChainId, ChainKey, ChainStage, GATEWAY, LIGHT_CLIENT, RPCS } from "../constants"
 import GATEWAY_ABI from "../../artifacts/gateway.abi.json"
+import { Provider } from "."
 
-export function getChainKey(chainId: ChainId): ChainKey {
+export const getChainKey = (chainId: ChainId): ChainKey => {
   const key = ChainId[chainId]
   // @ts-ignore
   const chainKey: ChainKey = ChainKey[key]
@@ -10,7 +11,7 @@ export function getChainKey(chainId: ChainId): ChainKey {
   throw new Error(`No ChainKey for ${chainId}`)
 }
 
-export function getChainIdByChainKey(chainKey: ChainKey): ChainId {
+export const getChainIdByChainKey = (chainKey: ChainKey): ChainId => {
   const ck = chainKey.toUpperCase()
   // @ts-ignore
   const chainId: ChainId = ChainId[ck]
@@ -25,17 +26,25 @@ export const getRpc = (chainId: ChainId, chainStage: ChainStage) => {
   return rpc
 }
 
-export function getLightClientAddress(chainId: ChainId, chainStage: ChainStage) {
+export const getLightClientAddress = (chainId: ChainId, chainStage: ChainStage) => {
   const chainKey = getChainKey(chainId)
-  const lc = LIGHT_CLIENT[chainStage][chainKey];
-  if (!lc) throw new Error("Light client not found")
-  return lc
+  const lightClientAddress = LIGHT_CLIENT[chainStage][chainKey];
+  if (!lightClientAddress) throw new Error("Light client not found")
+  return lightClientAddress
 }
 
-export function getGatewayContract(chainId: ChainId, chainStage: ChainStage, provider: ethers.providers.JsonRpcProvider | ethers.Wallet | ethers.providers.Web3Provider | ethers.Signer) {
+export const getGatewayAddress = (chainId: ChainId, chainStage: ChainStage) => {
   const chainKey = getChainKey(chainId)
   const gatewayAddress = GATEWAY[chainStage][chainKey]
   if (!gatewayAddress) throw new Error("Gateway address not found")
+  return gatewayAddress
+}
+
+export const getGatewayContract = (
+  chainId: ChainId,
+  chainStage: ChainStage,
+  provider: ethers.providers.JsonRpcProvider | Provider) => {
+  const gatewayAddress = getGatewayAddress(chainId, chainStage)
   return new ethers.Contract(
     gatewayAddress,
     GATEWAY_ABI,
