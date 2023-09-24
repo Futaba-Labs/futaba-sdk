@@ -8,9 +8,9 @@ export const RPCS: Record<ChainStage, Partial<Record<ChainKey, string>>> = {
     [ChainKey.OPTIMISM]: "",
   },
   [ChainStage.TESTNET]: {
-    [ChainKey.GOERLI]: "https://rpc.goerli.mudit.blog/",
+    [ChainKey.GOERLI]: "https://rpc.ankr.com/eth_goerli",
     [ChainKey.MUMBAI]: "https://rpc-mumbai.maticvigil.com",
-    [ChainKey.ARBITRUM_GOERLI]: "https://goerli-rollup.arbitrum.io/rpc/",
-    [ChainKey.OPTIMISM_GOERLI]: "https://goerli.optimism.io/",
+    [ChainKey.ARBITRUM_GOERLI]: "https://endpoints.omniatech.io/v1/arbitrum/goerli/public",
+    [ChainKey.OPTIMISM_GOERLI]: "https://goerli-optimism.etherscan.io",
   },
 }

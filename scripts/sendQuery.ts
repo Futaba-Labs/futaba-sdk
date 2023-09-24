@@ -8,15 +8,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 async function main() {
-  const slot1 = keccak256(concat([
+  const slot = keccak256(concat([
     hexZeroPad("0x2274d2C66dC7936044f7B46b7401c3F5187B78aa", 32),
     hexZeroPad(BigNumber.from(0).toHexString(), 32),
   ]));
 
-  const slot2 = keccak256(concat([
-    hexZeroPad("0x2274d2C66dC7936044f7B46b7401c3F5187B78aa", 32),
-    hexZeroPad(BigNumber.from(0).toHexString(), 32),
-  ]));
+  console.log("slot: ", slot)
 
   const usdcOnGoerli = "0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43" // USDC on Goerli
   const linkOnOpGoerli = "0x14cd1A7b8c547bD4A2f531ba1BF11B6c4f2b96db" // LINK on Optimism Goerli
@@ -32,11 +29,11 @@ async function main() {
   const queries: QueryRequest[] = [
     {
       dstChainId: 5, to: usdcOnGoerli, height:
-        8947365, slot: slot1
+        8947370, slot
     },
     {
       dstChainId: 420, to: linkOnOpGoerli, height:
-        9844420, slot: slot2
+        9844421, slot
     },
   ]
   console.log("Sending query...")
