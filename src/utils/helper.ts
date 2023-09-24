@@ -1,5 +1,5 @@
 import { ethers } from "ethers"
-import { ChainId, ChainKey, ChainStage, GATEWAY, LIGHT_CLIENT } from "../constants"
+import { ChainId, ChainKey, ChainStage, GATEWAY, LIGHT_CLIENT, RPCS } from "../constants"
 import GATEWAY_ABI from "../../artifacts/gateway.abi.json"
 
 export function getChainKey(chainId: ChainId): ChainKey {
@@ -16,6 +16,13 @@ export function getChainIdByChainKey(chainKey: ChainKey): ChainId {
   const chainId: ChainId = ChainId[ck]
   if (chainId) return chainId
   throw new Error(`No chainId for ${chainKey}`)
+}
+
+export const getRpc = (chainId: ChainId, chainStage: ChainStage) => {
+  const chainKey = getChainKey(chainId)
+  const rpc = RPCS[chainStage][chainKey]
+  if (!rpc) throw new Error("RPC not found")
+  return rpc
 }
 
 export function getLightClientAddress(chainId: ChainId, chainStage: ChainStage) {

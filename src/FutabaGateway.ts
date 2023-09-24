@@ -62,7 +62,7 @@ export class FutabaGateway {
     this.gateway.removeAllListeners()
     const filter = this.gateway.filters.ReceiveQuery(queryId, null, null, null, null)
 
-    return await new Promise<void>(async (resolve, reject) => {
+    return await new Promise<[]>(async (resolve, reject) => {
       try {
         this.gateway.on(filter, async (...args) => {
           const results = args[4]
