@@ -1,7 +1,12 @@
-import { BigNumber, ContractTransaction, ethers } from "ethers";
+import { BigNumber, ContractTransaction, Event, ethers } from "ethers";
 import { ChainId, ChainStage, FutabaQueryAPI } from ".";
 import { QueryStatus } from "./constants/QueryStatus";
 import { getLightClientAddress, getGatewayContract, QueryRequest, QueryResponse, Provider } from "./utils";
+
+interface QueryResult {
+  response: ethers.providers.TransactionResponse;
+  results: [];
+}
 
 export class FutabaGateway {
   readonly stage: ChainStage;
@@ -63,15 +68,17 @@ export class FutabaGateway {
     return status as QueryStatus;
   }
 
-  waitForQueryResult = async (queryId: string) => {
+  waitForQueryResult = async (queryId: string): Promise<QueryResult> => {
     this.gateway.removeAllListeners()
     const filter = this.gateway.filters.ReceiveQuery(queryId, null, null, null, null)
 
-    return await new Promise<[]>(async (resolve, reject) => {
+    return await new Promise<QueryResult>(async (resolve, reject) => {
       try {
         this.gateway.on(filter, async (...args) => {
+          const event: Event = args[args.length - 1]
+          const transaction = await event.getTransaction()
           const results = args[4]
-          resolve(results);
+          resolve({ response: transaction, results });
         })
       } catch (error) {
         console.error("Listener Failed: ", error)

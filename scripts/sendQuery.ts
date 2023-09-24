@@ -42,12 +42,13 @@ async function main() {
   console.log("Sending query...")
   // @ts-ignore
   const { tx, queryId } = await gateway.sendQuery(queries, callBack, message, BigNumber.from("1000000"))
-  console.log("Query is sent. tx: ", tx.transactionHash)
+  console.log("Query is sent, tx: ", tx.transactionHash)
 
   console.log("Waiting for query result...")
-  const results = await gateway.waitForQueryResult(queryId)
+  const { response, results } = await gateway.waitForQueryResult(queryId)
   console.log("Query result is received!!")
-  console.log(results)
+  console.log("response tx hash: ", response.hash)
+  console.log("results: ", JSON.stringify(results))
   process.exit(0)
 }
 
