@@ -13,4 +13,10 @@ export const RPCS: Record<ChainStage, Partial<Record<ChainKey, string>>> = {
     [ChainKey.ARBITRUM_GOERLI]: "https://endpoints.omniatech.io/v1/arbitrum/goerli/public",
     [ChainKey.OPTIMISM_GOERLI]: "https://goerli-optimism.etherscan.io",
   },
+  [ChainStage.DEVNET]: {
+    [ChainKey.GOERLI]: "https://rpc.ankr.com/eth_goerli",
+    [ChainKey.MUMBAI]: "https://rpc-mumbai.maticvigil.com",
+    [ChainKey.ARBITRUM_GOERLI]: "https://endpoints.omniatech.io/v1/arbitrum/goerli/public",
+    [ChainKey.OPTIMISM_GOERLI]: "https://goerli-optimism.etherscan.io",
+  },
 }
