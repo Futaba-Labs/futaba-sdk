@@ -13,6 +13,12 @@ export const GATEWAY: Record<ChainStage, Partial<Record<ChainKey, string>>> = {
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   },
+  [ChainStage.DEVNET]: {
+    [ChainKey.GOERLI]: "",
+    [ChainKey.MUMBAI]: "0x3Be18f89C371b56Ae12Ac498eE21F02219778611",
+    [ChainKey.ARBITRUM_GOERLI]: "",
+    [ChainKey.OPTIMISM_GOERLI]: "",
+  }
 }
 
 export const LIGHT_CLIENT: Record<ChainStage, Partial<Record<ChainKey, string>>> = {
@@ -28,4 +34,10 @@ export const LIGHT_CLIENT: Record<ChainStage, Partial<Record<ChainKey, string>>>
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   },
+  [ChainStage.DEVNET]: {
+    [ChainKey.GOERLI]: "",
+    [ChainKey.MUMBAI]: "0xA171Ec7644385e3dcc5A68af62E6c317f210c7b9",
+    [ChainKey.ARBITRUM_GOERLI]: "",
+    [ChainKey.OPTIMISM_GOERLI]: "",
+  }
 }
