@@ -1,6 +1,6 @@
 {
   "name": "@futaba-lab/sdk",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Futaba SDK is a Node.js library for sending transaction fee quotes and queries.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

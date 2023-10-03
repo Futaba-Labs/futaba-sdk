@@ -8,6 +8,6 @@ export enum ChainId {
   // testnet
   GOERLI = 5,
   MUMBAI = 80001,
-  ARBITRUM_GOERLI = 421611,
+  ARBITRUM_GOERLI = 421613,
   OPTIMISM_GOERLI = 420
 }
