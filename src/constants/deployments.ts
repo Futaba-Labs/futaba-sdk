@@ -30,13 +30,13 @@ export const LIGHT_CLIENT: Record<ChainStage, Partial<Record<ChainKey, string>>>
   },
   [ChainStage.TESTNET]: {
     [ChainKey.GOERLI]: "",
-    [ChainKey.MUMBAI]: "0xA171Ec7644385e3dcc5A68af62E6c317f210c7b9",
+    [ChainKey.MUMBAI]: "0x8EDfB284e0b406F2e8C46De28A313688A762E373",
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   },
   [ChainStage.DEVNET]: {
     [ChainKey.GOERLI]: "",
-    [ChainKey.MUMBAI]: "0xA171Ec7644385e3dcc5A68af62E6c317f210c7b9",
+    [ChainKey.MUMBAI]: "0x8EDfB284e0b406F2e8C46De28A313688A762E373",
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   }
