@@ -50,7 +50,6 @@ export class FutabaQueryAPI {
     const proofFee = BigNumber.from((BASE_QUERY_COST * querySize).toString())
 
     const oracleFee = BigNumber.from("0")
-
     const protocolFee = await this.estimateProtocolFee(queries)
 
     const totalFee = gelatoFee.add(proofFee).add(oracleFee).add(protocolFee)
