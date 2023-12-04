@@ -9,13 +9,13 @@ export const GATEWAY: Record<ChainStage, Partial<Record<ChainKey, string>>> = {
   },
   [ChainStage.TESTNET]: {
     [ChainKey.GOERLI]: "",
-    [ChainKey.MUMBAI]: "0x01E0698e24fD0ea124ED539Bc8570b68548061C5",
+    [ChainKey.MUMBAI]: "0x3fab87824ABbe2DC686ed5CbB032d9c62E2fe179",
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   },
   [ChainStage.DEVNET]: {
     [ChainKey.GOERLI]: "",
-    [ChainKey.MUMBAI]: "0x3Be18f89C371b56Ae12Ac498eE21F02219778611",
+    [ChainKey.MUMBAI]: "0x098A0579Ff42523FFB3B4FBd3582A769eE5556Df",
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   }
@@ -30,13 +30,13 @@ export const LIGHT_CLIENT: Record<ChainStage, Partial<Record<ChainKey, string>>>
   },
   [ChainStage.TESTNET]: {
     [ChainKey.GOERLI]: "",
-    [ChainKey.MUMBAI]: "0x87bbEfB934B52Dd329f26ccb7B903eEbc4d0c6b8",
+    [ChainKey.MUMBAI]: "0x8EDfB284e0b406F2e8C46De28A313688A762E373",
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   },
   [ChainStage.DEVNET]: {
     [ChainKey.GOERLI]: "",
-    [ChainKey.MUMBAI]: "0x87bbEfB934B52Dd329f26ccb7B903eEbc4d0c6b8",
+    [ChainKey.MUMBAI]: "0x53957A049DE3c5FAFa9DD2EaF63961A0bBdCA352",
     [ChainKey.ARBITRUM_GOERLI]: "",
     [ChainKey.OPTIMISM_GOERLI]: "",
   }
