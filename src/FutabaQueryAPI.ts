@@ -1,9 +1,6 @@
 import { BigNumber, ethers } from "ethers";
-import { BASE_QUERY_COST, ChainId, ChainStage, NATIVE_TOKEN, RPCS } from "./constants";
-import { GelatoRelay } from "@gelatonetwork/relay-sdk";
-import { getLightClientAddress, QueryRequest, getGatewayContract, getChainKey, getRpc } from "./utils";
-
-const relay = new GelatoRelay();
+import { ChainId, ChainStage } from "./constants";
+import { getLightClientAddress, QueryRequest, getGatewayContract, getRpc } from "./utils";
 
 export class FutabaQueryAPI {
   readonly stage: ChainStage;
@@ -45,16 +42,10 @@ export class FutabaQueryAPI {
     const querySize = queries.length
     if (querySize <= 0) throw new Error("querySize must be positive")
     if (querySize > 10) throw new Error("Too many queries")
-    const gelatoFee = await relay.getEstimatedFee(this.chainId, NATIVE_TOKEN, gasLimit, true)
 
-    const proofFee = BigNumber.from((BASE_QUERY_COST * querySize).toString())
-
-    const oracleFee = BigNumber.from("0")
     const protocolFee = await this.estimateProtocolFee(queries)
 
-    const totalFee = gelatoFee.add(proofFee).add(oracleFee).add(protocolFee)
-
-    return totalFee
+    return protocolFee
   }
 
   private estimateProtocolFee = async (queries: QueryRequest[]) => {
