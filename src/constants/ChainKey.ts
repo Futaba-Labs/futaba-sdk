@@ -9,5 +9,8 @@ export enum ChainKey {
   GOERLI = "goerli",
   MUMBAI = "mumbai",
   ARBITRUM_GOERLI = "arbitrum-goerli",
-  OPTIMISM_GOERLI = "optimism-goerli"
+  OPTIMISM_GOERLI = "optimism-goerli",
+  ARBITRUM_SEPOLIA = "arbitrum-sepolia",
+  OPTIMISM_SEPOLIA = "optimism-sepolia",
+  SEPOLIA = "sepolia",
 }
